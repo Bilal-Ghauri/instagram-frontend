@@ -11,17 +11,22 @@ import { addSinglePost } from '../../store/slices/PostSlice'
 import { RootState } from '../../store/store'
 
 const Comment = ({ comment }: any) => {
+	console.log('comment', comment)
+
 	const [showCommentForm, setShowCommentForm] = useState(false)
 	const [removeCommentLoading, setRemoveCommentLoading] = useState(false)
 
+	const { user } = useSelector((state: RootState) => state.UserReducer)
 	const dispatch = useDispatch()
 	const { singlePost } = useSelector((state: RootState) => state.PostReducer)
+	console.log(singlePost)
 
 	const removeComment = async (commentId) => {
 		try {
 			setRemoveCommentLoading(true)
 			const deleteComment = await axios.post(
-				`/post/delete/comment/${singlePost?._id}/${commentId}`
+				`/post/delete/comment/${singlePost?._id}/${commentId}`,
+				{ currentUserId: user?._id }
 			)
 			const deleteCommentREs = deleteComment.data
 			console.log(deleteCommentREs)
@@ -38,7 +43,7 @@ const Comment = ({ comment }: any) => {
 	}
 
 	return (
-		<div className='mb-5 '>
+		<div className='mb-5 border bg-gray-200 rounded-lg p-3'>
 			<div className=' pb-3 flex justify-between'>
 				<div className='flex'>
 					<img
@@ -64,22 +69,25 @@ const Comment = ({ comment }: any) => {
 			<p className='text-sm pr-5'>{comment?.text}</p>
 			<div className='pt-1 flex items-center justify-between pr-5'>
 				<div>
+					{console.log(comment?.commentOwner?._id == user?._id)}
 					{removeCommentLoading ? (
 						<span className='mx-4 mt-1'>
 							<ClipLoader color='#000' size={12} />
 						</span>
 					) : (
-						<small
-							className='pr-3 cursor-pointer font-semibold'
-							onClick={() => removeComment(comment?._id)}>
-							Remove
-						</small>
+						comment?.commentOwner?._id == user?._id && (
+							<small
+								className='pr-3 cursor-pointer font-semibold'
+								onClick={() => removeComment(comment?._id)}>
+								Remove
+							</small>
+						)
 					)}
-					<small
+					{/* <small
 						className='cursor-pointer font-semibold'
 						onClick={() => setShowCommentForm(!showCommentForm)}>
 						Reply
-					</small>
+					</small> */}
 				</div>
 			</div>
 			{showCommentForm && (
