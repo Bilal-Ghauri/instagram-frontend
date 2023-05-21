@@ -63,7 +63,7 @@ const UserProfile = () => {
 			return 'Update'
 		} else {
 			let userExist = user?.following.find(
-				(user) => user._id == data?._id
+				(user: any) => user._id == data?._id
 			)
 			if (userExist) {
 				return 'Unfollow'
@@ -81,7 +81,7 @@ const UserProfile = () => {
 		try {
 			setFollowLoading(true)
 			let findUser = user?.following?.find(
-				(singleUser) => singleUser._id == data?._id
+				(singleUser: any) => singleUser._id == data?._id
 			)
 			if (findUser) {
 				await axios.post('/user/unfollow/user', {
@@ -161,7 +161,8 @@ const UserProfile = () => {
 							onClick={handleFollowUser}
 							className={`${
 								user?.following.find(
-									(singleUser) => singleUser._id == data?._id
+									(singleUser: any) =>
+										singleUser._id == data?._id
 								)
 									? 'border-2 text-primary'
 									: 'bg-primary text-white'

@@ -18,6 +18,8 @@ const AddPost = () => {
 	const [postText, setPostText] = useState('')
 	const [loading, setLoading] = useState(false)
 
+	console.log(postImg)
+
 	const { originalPostsArray } = useSelector(
 		(state: RootState) => state.PostReducer
 	)
@@ -25,16 +27,24 @@ const AddPost = () => {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		if (postImg !== null) {
-			const reader = new FileReader()
-			reader.readAsDataURL(postImg)
-			reader.onload = () => {
-				setImgBlob(reader.result)
+		if (postImg !== undefined) {
+			if (postImg !== null) {
+				const reader = new FileReader()
+				reader.readAsDataURL(postImg)
+				reader.onload = () => {
+					setImgBlob(reader.result)
+				}
 			}
+		} else {
+			setPostImg(null)
+			setImgBlob(null)
 		}
 	}, [postImg])
 
 	const handleChangePic = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setPostImg(null)
+		console.log(e.target.files)
+
 		if (!e.target.files) return
 		setPostImg(e.target.files[0])
 	}

@@ -45,7 +45,9 @@ const Comment = ({ comment }: any) => {
 	return (
 		<div className='mb-5 border bg-gray-200 rounded-lg p-3'>
 			<div className=' pb-3 flex justify-between'>
-				<div className='flex'>
+				<div
+					className='flex w-full pb-2'
+					style={{ borderBottom: '2px solid lightgray' }}>
 					<img
 						src={
 							comment?.commentOwner?.profilePicture ||
