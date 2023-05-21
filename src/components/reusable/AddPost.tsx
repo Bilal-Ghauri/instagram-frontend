@@ -14,7 +14,7 @@ import { RootState } from '../../store/store'
 
 const AddPost = () => {
 	const [postImg, setPostImg] = useState<null | File | Blob>(null)
-	const [imgBlob, setImgBlob] = useState<string | ArrayBuffer | null>(null)
+	const [imgBlob, setImgBlob] = useState<string | null>(null)
 	const [postText, setPostText] = useState('')
 	const [loading, setLoading] = useState(false)
 
@@ -32,7 +32,7 @@ const AddPost = () => {
 				const reader = new FileReader()
 				reader.readAsDataURL(postImg)
 				reader.onload = () => {
-					setImgBlob(reader.result)
+					setImgBlob(String(reader.result))
 				}
 			}
 		} else {
