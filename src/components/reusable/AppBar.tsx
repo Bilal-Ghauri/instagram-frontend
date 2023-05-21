@@ -71,7 +71,7 @@ const AppBar = () => {
 	window.onresize = applyStyles
 
 	const customStyles = {
-		option: (baseStyles, state) => ({
+		option: (baseStyles: any, state: any) => ({
 			...baseStyles,
 			display: 'flex',
 			alignItems: 'center',

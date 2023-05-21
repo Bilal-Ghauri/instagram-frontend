@@ -5,7 +5,6 @@ import { RootState } from '../../store/store'
 import moment from 'moment'
 import { IUser } from '../../types/User.types'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { ObjectId } from 'mongoose'
 import {
 	addAllPosts,
 	addExplorePosts,
@@ -87,20 +86,22 @@ const Post = ({ post, width = 'w-full', postNum, index }: any) => {
 	const handleLikeUser = async (postId: string) => {
 		let id = user?._id
 		if (location.pathname == '/bookmarks') {
-			let findPost = user?.bookmarks.find((item) => item._id == postId)
+			let findPost: any = user?.bookmarks.find(
+				(item: any) => item._id == postId
+			)
 			if (findPost) {
 				let findLike = findPost?.postLikes.find(
-					(item) => item == user?._id
+					(item: any) => item == user?._id
 				)
 				if (findLike) {
 					let likesArr = findPost?.postLikes.filter(
-						(item) => item !== user?._id
+						(item: any) => item !== user?._id
 					)
 					findPost = {
 						...findPost,
 						postLikes: likesArr,
 					}
-					let bookMarksArr = user?.bookmarks.map((item) => {
+					let bookMarksArr = user?.bookmarks.map((item: any) => {
 						if (item._id == findPost._id) {
 							return findPost
 						}
@@ -118,7 +119,7 @@ const Post = ({ post, width = 'w-full', postNum, index }: any) => {
 						...findPost,
 						postLikes,
 					}
-					let bookMarksArr = user?.bookmarks.map((item) => {
+					let bookMarksArr = user?.bookmarks.map((item: any) => {
 						if (item._id == findPost._id) {
 							return findPost
 						}
@@ -135,11 +136,11 @@ const Post = ({ post, width = 'w-full', postNum, index }: any) => {
 		} else if (location.pathname == `/post/${postId}`) {
 			let findPost = { ...singlePost }
 			let findLike = findPost?.postLikes?.find(
-				(item) => item == user?._id
+				(item: any) => item == user?._id
 			)
 			if (findLike) {
 				let likesArr = findPost?.postLikes.filter(
-					(item) => item !== user?._id
+					(item: any) => item !== user?._id
 				)
 				findPost = {
 					...findPost,
@@ -165,9 +166,11 @@ const Post = ({ post, width = 'w-full', postNum, index }: any) => {
 		} else {
 			let postsArr = [...originalPostsArray]
 			let findPost = postsArr.find((item) => item?._id == postId)
-			let findLike = findPost.postLikes.find((item) => item == id)
+			let findLike = findPost.postLikes.find((item: any) => item == id)
 			if (findLike) {
-				let likesArr = findPost.postLikes.filter((item) => item !== id)
+				let likesArr = findPost.postLikes.filter(
+					(item: any) => item !== id
+				)
 				findPost = {
 					...findPost,
 					postLikes: likesArr,
@@ -203,12 +206,12 @@ const Post = ({ post, width = 'w-full', postNum, index }: any) => {
 		}
 	}
 
-	const handleAddBookmark = async (post) => {
-		let findPost = user?.bookmarks.find((item) => item._id == post._id)
+	const handleAddBookmark = async (post: any) => {
+		let findPost = user?.bookmarks.find((item: any) => item._id == post._id)
 		if (findPost) {
 			// remove post from bookmarks
 			let bookMarksArr = user?.bookmarks.filter(
-				(item) => item._id !== post._id
+				(item: any) => item._id !== post._id
 			)
 			let userClone = { ...user, bookmarks: bookMarksArr }
 			dispatch(addUser({ user: userClone }))

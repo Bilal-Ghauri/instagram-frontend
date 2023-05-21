@@ -25,7 +25,7 @@ const UserProfile = () => {
 	const navigate = useNavigate()
 
 	window.addEventListener('resize', () => {
-		windowResizerFunction()
+		// windowResizerFunction()
 	})
 
 	const getSingleUser = async () => {
@@ -35,8 +35,13 @@ const UserProfile = () => {
 			const apiData = await apiRequest.data
 			setData(apiData.user)
 
-			let sortedArray = apiData?.user?.posts?.sort(function (a, b) {
-				return new Date(b.createdAt) - new Date(a.createdAt)
+			let sortedArray = apiData?.user?.posts?.sort(function (
+				a: any,
+				b: any
+			) {
+				let bDate: any = new Date(b.createdAt)
+				let aDate: any = new Date(a.createdAt)
+				return bDate - aDate
 			})
 
 			setSingleUserPosts(sortedArray)

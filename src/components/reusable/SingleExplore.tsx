@@ -15,13 +15,15 @@ const SingleExplore = ({ post }: any) => {
 	const { user } = useSelector((state: RootState) => state.UserReducer)
 	const id = user?._id
 
-	const likePost = async (singlePost) => {
-		const findLike = singlePost.postLikes.find((item) => item == id)
+	const likePost = async (singlePost: any) => {
+		const findLike = singlePost.postLikes.find((item: any) => item == id)
 		if (findLike) {
-			let removeLike = singlePost.postLikes.filter((item) => item !== id)
+			let removeLike = singlePost.postLikes.filter(
+				(item: any) => item !== id
+			)
 			let postToAdd = { ...singlePost, postLikes: removeLike }
 			let postsClone: any = [...originalPostsArray]
-			postsClone = postsClone.map((item) => {
+			postsClone = postsClone.map((item: any) => {
 				if (item._id === singlePost._id) {
 					return postToAdd
 				}
@@ -36,7 +38,7 @@ const SingleExplore = ({ post }: any) => {
 			let addLike = [...singlePost.postLikes, id]
 			let postToAdd = { ...singlePost, postLikes: addLike }
 			let postsClone: any = [...originalPostsArray]
-			postsClone = postsClone.map((item) => {
+			postsClone = postsClone.map((item: any) => {
 				if (item._id === singlePost._id) {
 					return postToAdd
 				}

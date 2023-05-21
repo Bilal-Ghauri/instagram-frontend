@@ -2,11 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 import Cookies from 'js-cookie'
 
 interface IState {
-	posts: null | Array<Object>
-	originalPostsArray: null | Array<Object>
-	explorePosts: null | Array<Object>
-	bookmarks: null | Array<Object>
-	singlePost: null | Object
+	posts: null | Array<Object> | any
+	originalPostsArray: null | Array<Object> | any
+	explorePosts: null | any
+	bookmarks: null | any
+	singlePost: null | Object | any
 }
 const initialState: IState = {
 	posts: [],

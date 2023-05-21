@@ -19,9 +19,7 @@ const SiderBar = () => {
 	const dispatch = useDispatch()
 	const [userPostsLength, setUserPostsLength] = useState(0)
 	const [open, setOpen] = useState(false)
-	const [currentModelToShow, setCurrentModelToShow] = useState<null | object>(
-		null
-	)
+	const [currentModelToShow, setCurrentModelToShow] = useState<any>(null)
 	const onOpenModal = () => {
 		handleHideSideBar('sideBar')
 		setOpen(true)
@@ -278,7 +276,7 @@ const SiderBar = () => {
 									: "Your aren't Following anyone"}
 							</div>
 						) : (
-							currentModelToShow?.persons.map((item) => {
+							currentModelToShow?.persons.map((item: any) => {
 								return (
 									<div className=' bg-[rgba(0,0,0,0.2)] rounded-lg p-2  my-3 cursor-pointer active:scale-[.98]'>
 										<Link

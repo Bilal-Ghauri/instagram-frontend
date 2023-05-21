@@ -113,7 +113,7 @@ export const populateAllPosts = (postsArray: any, bookmarks = []) => {
 	}
 }
 
-export const checkPostsLength = (posts: any) => {
+export const checkPostsLength = (posts: any): any => {
 	if (posts) {
 		let count = 0
 		if (posts[0] && posts[0].length > 0) {

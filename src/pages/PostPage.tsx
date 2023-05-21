@@ -63,11 +63,16 @@ const PostPage = () => {
 							{loading ? (
 								<ClipLoader color='#000' />
 							) : singlePost?.comments?.length > 0 ? (
-								singlePost?.comments.map((item, index) => {
-									return (
-										<Comment comment={item} key={index} />
-									)
-								})
+								singlePost?.comments.map(
+									(item: any, index: any) => {
+										return (
+											<Comment
+												comment={item}
+												key={index}
+											/>
+										)
+									}
+								)
 							) : (
 								<div className='h-full  flex items-center justify-center text-xl font-bold'>
 									No Comments

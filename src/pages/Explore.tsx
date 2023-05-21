@@ -51,21 +51,23 @@ const Explore = () => {
 			<AppBar />
 			{loading ? (
 				skeleton
-			) : explorePosts?.length > 0 &&
+			) : explorePosts &&
+			  explorePosts?.length > 0 &&
 			  checkPostsLength(explorePosts) > 0 ? (
 				<div className='grid mt-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4 '>
 					<div className='flex flex-col items-start  gap-4'>
-						{explorePosts[0]?.map((post, index) => {
-							return <SingleExplore key={index} post={post} />
-						})}
+						{explorePosts[0] &&
+							explorePosts[0]?.map((post: any, index: any) => {
+								return <SingleExplore key={index} post={post} />
+							})}
 					</div>
 					<div className='flex  flex-col  gap-4'>
-						{explorePosts[1]?.map((post, index) => {
+						{explorePosts[1]?.map((post: any, index: any) => {
 							return <SingleExplore key={index} post={post} />
 						})}
 					</div>
 					<div className=' flex  flex-col  gap-4'>
-						{explorePosts[2]?.map((post, index) => {
+						{explorePosts[2]?.map((post: any, index: any) => {
 							return <SingleExplore key={index} post={post} />
 						})}
 					</div>

@@ -21,7 +21,7 @@ const Comment = ({ comment }: any) => {
 	const { singlePost } = useSelector((state: RootState) => state.PostReducer)
 	console.log(singlePost)
 
-	const removeComment = async (commentId) => {
+	const removeComment = async (commentId: any) => {
 		try {
 			setRemoveCommentLoading(true)
 			const deleteComment = await axios.post(
@@ -69,7 +69,6 @@ const Comment = ({ comment }: any) => {
 			<p className='text-sm pr-5'>{comment?.text}</p>
 			<div className='pt-1 flex items-center justify-between pr-5'>
 				<div>
-					{console.log(comment?.commentOwner?._id == user?._id)}
 					{removeCommentLoading ? (
 						<span className='mx-4 mt-1'>
 							<ClipLoader color='#000' size={12} />

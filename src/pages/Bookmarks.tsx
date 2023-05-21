@@ -18,7 +18,7 @@ const Bookmarks = () => {
 	const { bookmarks } = useSelector((state: RootState) => state.PostReducer)
 
 	const dispatch = useDispatch()
-	const noPosts = () => {
+	const noPosts = (): any => {
 		setTimeout(() => {
 			setNoPostsToShow('No Bookmarks To Show')
 		}, 1000)
@@ -75,53 +75,63 @@ const Bookmarks = () => {
 			) : (
 				<div
 					className={`${
-						bookmarks.length > 0 && checkPostsLength(bookmarks) == 0
+						bookmarks &&
+						bookmarks?.length > 0 &&
+						checkPostsLength(bookmarks) == 0
 							? 'w-full'
 							: 'grid  md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-7'
 					}`}>
-					{bookmarks.length > 0 && checkPostsLength(bookmarks) > 0 ? (
+					{bookmarks &&
+					bookmarks.length > 0 &&
+					checkPostsLength(bookmarks) > 0 ? (
 						<>
-							{bookmarks[0]?.length > 0 && (
+							{bookmarks[0] && bookmarks[0]?.length > 0 && (
 								<div className='flex flex-col items-start  gap-3'>
-									{bookmarks[0]?.map((post, index) => {
-										return (
-											<Post
-												key={index}
-												post={post}
-												index={index}
-												postNum={0}
-											/>
-										)
-									})}
+									{bookmarks[0]?.map(
+										(post: any, index: any) => {
+											return (
+												<Post
+													key={index}
+													post={post}
+													index={index}
+													postNum={0}
+												/>
+											)
+										}
+									)}
 								</div>
 							)}
 							{bookmarks[1]?.length > 0 && (
 								<div className='flex flex-col items-start  gap-3'>
-									{bookmarks[1]?.map((post, index) => {
-										return (
-											<Post
-												key={index}
-												post={post}
-												index={index}
-												postNum={1}
-											/>
-										)
-									})}
+									{bookmarks[1]?.map(
+										(post: any, index: any) => {
+											return (
+												<Post
+													key={index}
+													post={post}
+													index={index}
+													postNum={1}
+												/>
+											)
+										}
+									)}
 								</div>
 							)}
 
 							{bookmarks[2]?.length > 0 && (
 								<div className='flex flex-col items-start  gap-3'>
-									{bookmarks[2]?.map((post, index) => {
-										return (
-											<Post
-												key={index}
-												post={post}
-												index={index}
-												postNum={2}
-											/>
-										)
-									})}
+									{bookmarks[2]?.map(
+										(post: any, index: any) => {
+											return (
+												<Post
+													key={index}
+													post={post}
+													index={index}
+													postNum={2}
+												/>
+											)
+										}
+									)}
 								</div>
 							)}
 						</>

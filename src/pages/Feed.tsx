@@ -41,9 +41,10 @@ const Feed = () => {
 		}
 	}
 
-	const noPosts = () => {
+	const noPosts = (): any => {
 		setTimeout(() => {
-			posts?.length > 0 &&
+			posts &&
+				posts?.length > 0 &&
 				checkPostsLength(posts) == 0 &&
 				setNoPostsToShow('No Posts To Show')
 		}, 1000)
@@ -77,31 +78,38 @@ const Feed = () => {
 			) : (
 				<div
 					className={`${
-						posts?.length > 0 && checkPostsLength(posts) == 0
+						posts &&
+						posts?.length > 0 &&
+						checkPostsLength(posts) == 0
 							? 'w-full'
 							: 'grid  md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-7'
 					}`}>
-					{posts?.length > 0 && checkPostsLength(posts) > 0 ? (
+					{posts &&
+					posts?.length > 0 &&
+					checkPostsLength(posts) > 0 ? (
 						<>
-							{posts[0]?.length > 0 && (
+							{posts[0] && posts[0]?.length > 0 && (
 								<>
 									<div className='flex flex-col items-start  gap-3'>
-										{posts[0]?.map((post, index) => {
-											return (
-												<Post
-													key={index}
-													post={post}
-													index={index}
-													postNum={0}
-												/>
-											)
-										})}
+										{posts[0] &&
+											posts[0]?.map(
+												(post: any, index: any) => {
+													return (
+														<Post
+															key={index}
+															post={post}
+															index={index}
+															postNum={0}
+														/>
+													)
+												}
+											)}
 									</div>
 								</>
 							)}
 							{posts[1]?.length > 0 && (
 								<div className='flex flex-col items-start  gap-3'>
-									{posts[1]?.map((post, index) => {
+									{posts[1]?.map((post: any, index: any) => {
 										return (
 											<Post
 												key={index}
@@ -116,7 +124,7 @@ const Feed = () => {
 
 							{posts[2]?.length > 0 && (
 								<div className='flex flex-col items-start  gap-3'>
-									{posts[2]?.map((post, index) => {
+									{posts[2]?.map((post: any, index: any) => {
 										return (
 											<Post
 												key={index}

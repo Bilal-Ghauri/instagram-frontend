@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import { IUser } from '../../types/User.types'
 
 interface IState {
-	user: IUser | null
+	user: IUser | null | any
 	token: null | String | undefined
 }
 
