@@ -65,7 +65,12 @@ const AddPost = () => {
 				setLoading(true)
 				const postImgRequest = await axios.post(
 					'/post/post-image-upload',
-					fd
+					fd,
+					{
+						headers: {
+							'Content-Type': 'multipart/form-data',
+						},
+					}
 				)
 				const postImgResponse = await postImgRequest.data
 				const postRequest = await axios.post('/post/user-post', {
