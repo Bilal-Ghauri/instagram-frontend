@@ -6,7 +6,7 @@ export const userApi = createApi({
 	reducerPath: 'User',
 	tagTypes: ['User'],
 	baseQuery: fetchBaseQuery({
-		baseUrl: 'https://instagram-backend-ten.vercel.app',
+		baseUrl: import.meta.env.VITE_APP_API_URL as string,
 		prepareHeaders: (headers) => {
 			let token = Cookies.get('UserToken')
 			if (token) {

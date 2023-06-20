@@ -18,35 +18,20 @@ const AddPost = () => {
 	const [postText, setPostText] = useState('')
 	const [loading, setLoading] = useState(false)
 
-	console.log(postImg)
-
 	const { originalPostsArray } = useSelector(
 		(state: RootState) => state.PostReducer
 	)
 
 	const dispatch = useDispatch()
 
-	useEffect(() => {
-		if (postImg !== undefined) {
-			if (postImg !== null) {
-				const reader = new FileReader()
-				reader.readAsDataURL(postImg)
-				reader.onload = () => {
-					setImgBlob(String(reader.result))
-				}
-			}
-		} else {
-			setPostImg(null)
-			setImgBlob(null)
-		}
-	}, [postImg])
-
 	const handleChangePic = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setPostImg(null)
-		console.log(e.target.files)
-
 		if (!e.target.files) return
 		setPostImg(e.target.files[0])
+		const reader = new FileReader()
+		reader.readAsDataURL(e.target.files[0])
+		reader.onload = () => {
+			setImgBlob(String(reader.result))
+		}
 	}
 
 	const hideAddPostContainer = () => {
@@ -57,12 +42,13 @@ const AddPost = () => {
 	}
 
 	const createPost = async () => {
-		const imageUrl = ''
+		setLoading(true)
+		let imageUrl = ''
 		if (postImg) {
-			const fd = new FormData()
-			fd.append('image', postImg)
 			try {
-				setLoading(true)
+				const fd = new FormData()
+				fd.append('image', postImg)
+
 				const postImgRequest = await axios.post(
 					'/post/post-image-upload',
 					fd,

@@ -16,18 +16,6 @@ const Login = () => {
 	const dispatch = useDispatch()
 	const { user } = useSelector((state: RootState) => state.UserReducer)
 
-	// const [loginUser, { data, isLoading, error }] = useLoginUserMutation()
-
-	// if (data) {
-	// 	Cookies.set('UserToken', data.token)
-	// 	dispatch(addUserData(data))
-	// 	navigate('/')
-	// }
-
-	// if (error) {
-	// 	console.log(error)
-	// }
-
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		if (email.trim() == '' || password.trim() == '') {
