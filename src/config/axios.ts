@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-export const baseURL = 'https://instagram-backend-ten.vercel.app/'
+export const baseURL = import.meta.env.VITE_APP_API_URL as string
 
 const api = axios.create({
 	baseURL,
