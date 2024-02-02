@@ -46,22 +46,27 @@ const AddPost = () => {
 		let imageUrl = ''
 		if (postImg) {
 			try {
-				const fd = new FormData()
-				fd.append('image', postImg)
+				const data = new FormData()
+				data.append('file', postImg)
+				data.append('upload_preset', 'instauploadpreset')
+				data.append('clound_name', 'dgzsyrweq')
 
-				const postImgRequest = await axios.post(
-					'/post/post-image-upload',
-					fd,
+				const response = await fetch(
+					'https://api.cloudinary.com/v1_1/dgzsyrweq/image/upload',
 					{
-						headers: {
-							'Content-Type': 'multipart/form-data',
-						},
+						method: 'post',
+						body: data,
 					}
 				)
-				const postImgResponse = await postImgRequest.data
+				if (!response.ok) {
+					throw new Error(`HTTP error! Status: ${response.status}`)
+				}
+				const jsonData = await response.json()
+				console.log('jsonData', jsonData)
+
 				const postRequest = await axios.post('/post/user-post', {
 					postContent: postText,
-					postImg: postImgResponse.url,
+					postImg: jsonData.secure_url,
 				})
 				const postResponse = await postRequest.data
 				console.log(postResponse)
