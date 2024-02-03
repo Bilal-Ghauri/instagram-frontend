@@ -41,7 +41,7 @@ const App = () => {
 			const getUserResponse = await getUserRequest.data
 			dispatch(addUser(getUserResponse))
 			// navigate(localStorage.getItem('userPath') || '/')
-			navigate('/')
+			// navigate('/')
 			setLoading(false)
 		} catch (error) {
 			console.log(error)
