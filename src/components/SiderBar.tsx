@@ -87,7 +87,7 @@ const SiderBar = () => {
 					<div className='items-list flex justify-between mt-7 text-gray-500'>
 						<div className='flex flex-col '>
 							<span className='text-xl text-center text-black'>
-								{userPostsLength}
+								{userPostsLength || user?.posts?.length}
 							</span>{' '}
 							<div className='font-medium '>Posts</div>
 						</div>

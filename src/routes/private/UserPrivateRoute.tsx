@@ -5,13 +5,10 @@ import { RootState } from '../../store/store'
 import Cookies from 'js-cookie'
 
 const UserPrivateRoute = ({ children, isLoading }: any) => {
-	const { user, token } = useSelector((state: RootState) => state.UserReducer)
-
 	const userToken = Cookies.get('UserToken')
 	if (isLoading) {
 		return
 	}
-
 	if (userToken) {
 		return children
 	}

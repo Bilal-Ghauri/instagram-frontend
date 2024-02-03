@@ -17,20 +17,22 @@ import { addUser } from './store/slices/UserSlice'
 import { useEffect, useMemo, useState } from 'react'
 import { RootState } from './store/store'
 import { useSelector } from 'react-redux'
-import PostSkeletion from './components/reusable/PostSkeletion'
 import { populateAllPosts } from './utils/utils'
-import { addAllPosts, addExplorePosts } from './store/slices/PostSlice'
+import {
+	addAllPosts,
+	addExplorePosts,
+	addOriginalPostsArray,
+} from './store/slices/PostSlice'
 import axios from './config/axios'
 import PostPage from './pages/PostPage'
 import 'react-responsive-modal/styles.css'
+import { InfinitySpin } from 'react-loader-spinner'
 
 const App = () => {
-	const { user, token } = useSelector((state: RootState) => state.UserReducer)
 	const { originalPostsArray } = useSelector(
 		(state: RootState) => state.PostReducer
 	)
 	const [loading, setLoading] = useState(false)
-	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const location = useLocation()
 
@@ -40,8 +42,6 @@ const App = () => {
 			const getUserRequest = await axios.get('/user/get/user')
 			const getUserResponse = await getUserRequest.data
 			dispatch(addUser(getUserResponse))
-			// navigate(localStorage.getItem('userPath') || '/')
-			// navigate('/')
 			setLoading(false)
 		} catch (error) {
 			console.log(error)
@@ -83,7 +83,7 @@ const App = () => {
 	if (loading) {
 		return (
 			<div className='w-screen h-screen overflow-hidden flex items-center justify-center'>
-				<img src='/loading.gif' alt='' />
+				<InfinitySpin width='200' color='#4fa94d' />
 			</div>
 		)
 	}

@@ -17,14 +17,11 @@ import { checkPostsLength, populateAllPosts } from '../utils/utils'
 
 const Feed = () => {
 	const [loading, setLoading] = useState(false)
+	const dispatch = useDispatch()
 	const [noPostToShow, setNoPostsToShow] = useState('')
-
-	const { user, token } = useSelector((state: RootState) => state.UserReducer)
 	const { posts, originalPostsArray } = useSelector(
 		(state: RootState) => state.PostReducer
 	)
-
-	const dispatch = useDispatch()
 
 	const getAllPostsFromAPI = async () => {
 		try {
@@ -41,6 +38,10 @@ const Feed = () => {
 		}
 	}
 
+	useEffect(() => {
+		getAllPostsFromAPI()
+	}, [])
+
 	const noPosts = (): any => {
 		setTimeout(() => {
 			posts &&
@@ -49,9 +50,6 @@ const Feed = () => {
 				setNoPostsToShow('No Posts To Show')
 		}, 1000)
 	}
-	useEffect(() => {
-		getAllPostsFromAPI()
-	}, [])
 
 	useEffect(() => {
 		noPosts()
@@ -67,8 +65,6 @@ const Feed = () => {
 			<PostSkeletion />s
 		</div>
 	)
-
-	useEffect(() => {}, [])
 
 	return (
 		<div className='w-full  '>

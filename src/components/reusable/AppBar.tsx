@@ -15,7 +15,6 @@ import { components } from 'react-select'
 
 const AppBar = () => {
 	const navigate = useNavigate()
-
 	const [isOpen, setIsOpen] = useState(false)
 	const [mobileSize, setMobileSize] = useState(false)
 	const [hideIcons, setHideIcons] = useState(false)

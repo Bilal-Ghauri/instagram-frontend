@@ -6,14 +6,14 @@ import { RootState } from '../store/store'
 import axios from '.././config/axios'
 import { addUser } from '../store/slices/UserSlice'
 import { useDispatch } from 'react-redux'
-import Cookies from 'js-cookie'
-import SettingsSkeleton from './SettingsSkeleton'
 import { getUser } from '../services/UserService'
 
 const Settings = () => {
 	const dispatch = useDispatch()
 	const [loading, setLoading] = useState(false)
 	const { user } = useSelector((state: RootState) => state.UserReducer)
+	console.log('user', user)
+
 	const [coverPhoto, setCoverPhoto] = useState<IPic>({
 		pic: null,
 		blob: null,
@@ -40,63 +40,75 @@ const Settings = () => {
 	}
 
 	const updateUserData = async () => {
-		let fd = new FormData()
+		let coverPhotoResponseUrl = ''
+		let profilePhotoResponseUrl = ''
 		if (coverPhoto.pic) {
-			fd.append('coverPhoto', coverPhoto.pic)
+			try {
+				const data = new FormData()
+				data.append('file', coverPhoto.pic)
+				data.append('upload_preset', 'instauploadpreset')
+				data.append('clound_name', 'dgzsyrweq')
+				const response = await fetch(
+					'https://api.cloudinary.com/v1_1/dgzsyrweq/image/upload',
+					{
+						method: 'post',
+						body: data,
+					}
+				)
+				if (!response.ok) {
+					throw new Error(`HTTP error! Status: ${response.status}`)
+				}
+				const jsonData = await response.json()
+				console.log('coverPhotoResponseUrl', coverPhotoResponseUrl)
+
+				coverPhotoResponseUrl = jsonData.secure_url
+			} catch (error) {
+				console.log(error)
+			}
 		}
 		if (profilePhoto.pic) {
-			fd.append('profilePhoto', profilePhoto.pic)
+			try {
+				const data = new FormData()
+				data.append('file', profilePhoto.pic)
+				data.append('upload_preset', 'instauploadpreset')
+				data.append('clound_name', 'dgzsyrweq')
+				const response = await fetch(
+					'https://api.cloudinary.com/v1_1/dgzsyrweq/image/upload',
+					{
+						method: 'post',
+						body: data,
+					}
+				)
+				if (!response.ok) {
+					throw new Error(`HTTP error! Status: ${response.status}`)
+				}
+				const jsonData = await response.json()
+				console.log('profilePhotoResponseUrl', jsonData)
+
+				profilePhotoResponseUrl = jsonData.secure_url
+			} catch (error) {
+				console.log(error)
+			}
 		}
 
-		if (coverPhoto.pic || profilePhoto.pic) {
-			try {
-				setLoading(true)
-				let apiRequest = await axios.post('/user/upload', fd, {
-					headers: {
-						'Content-Type': 'multipart/form-data',
-					},
-				})
-				let apiData = await apiRequest.data
-				if (apiData) {
-					await axios.post('/user/update/user', {
-						name: userData.name,
-						bio: userData.bio,
-						location: userData.location,
-						DOB: userData.DOB,
-						profession: userData.profession,
-						website: userData.website,
-						profilePicture:
-							apiData?.profilePhoto || user?.profilePicture,
-						coverPicture: apiData?.coverPhoto || user?.coverPicture,
-					})
-					let userGet = await getUser()
-					dispatch(addUser(userGet))
-					setLoading(false)
-				}
-			} catch (error) {
-				setLoading(false)
-				console.log(error)
-			}
-		} else {
-			try {
-				setLoading(true)
-				await axios.post('/user/update/user', {
-					name: userData.name,
-					bio: userData.bio,
-					location: userData.location,
-					DOB: userData.DOB,
-					profession: userData.profession,
-					website: userData.website,
-					profilePicture: user?.profilePicture,
-					coverPicture: user?.coverPicture,
-				})
-				let userGet = await getUser()
-				dispatch(addUser(userGet))
-				setLoading(false)
-			} catch (error) {
-				setLoading(false)
-				console.log(error)
-			}
+		try {
+			setLoading(true)
+			await axios.post('/user/update/user', {
+				name: userData.name || user.name,
+				bio: userData.bio || user.bio,
+				location: userData.location || user.location,
+				DOB: userData.DOB || user.DOB,
+				profession: userData.profession || user.profession,
+				website: userData.website || user.website,
+				profilePicture: profilePhotoResponseUrl || user?.profilePicture,
+				coverPicture: coverPhotoResponseUrl || user?.coverPicture,
+			})
+			let userGet = await getUser()
+			dispatch(addUser(userGet))
+			setLoading(false)
+		} catch (error) {
+			setLoading(false)
+			console.log(error)
 		}
 	}
 
@@ -263,7 +275,7 @@ const Settings = () => {
 							<input
 								type='date'
 								name='DOB'
-								value={userData.DOB}
+								value={userData?.DOB?.substring(0, 10)}
 								className='border w-full p-2 mt-2 rounded-lg'
 								onChange={handleChange}
 							/>
