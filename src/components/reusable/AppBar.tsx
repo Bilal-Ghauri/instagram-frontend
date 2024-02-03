@@ -23,7 +23,7 @@ const AppBar = () => {
 	const [inputValue, setInputValue] = useState('')
 	const [searchUsers, setSearchUsers] = useState([])
 
-	const asyncSelectRef = useRef(null)
+	const asyncSelectRef = useRef<any>(null)
 
 	// Function to focus on the AsyncSelect
 	const focusAsyncSelect = () => {
