@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState, useMemo, useRef } from 'react'
 import {
 	handleHideSideBar,
 	handleShowSideBar,
@@ -22,6 +22,21 @@ const AppBar = () => {
 	const [selectStyle, setSelectStyle] = useState('w-96')
 	const [inputValue, setInputValue] = useState('')
 	const [searchUsers, setSearchUsers] = useState([])
+
+	const asyncSelectRef = useRef(null)
+
+	// Function to focus on the AsyncSelect
+	const focusAsyncSelect = () => {
+		if (asyncSelectRef.current) {
+			asyncSelectRef.current.focus()
+		}
+	}
+
+	useEffect(() => {
+		if (hideIcons) {
+			focusAsyncSelect()
+		}
+	}, [hideIcons])
 
 	// const searchUserApi = async () => {
 	//   axios
@@ -159,6 +174,7 @@ const AppBar = () => {
 						onChange={(e: any) => {
 							navigate(`/profile/${e.value}`)
 						}}
+						ref={asyncSelectRef}
 					/>
 				)}
 
