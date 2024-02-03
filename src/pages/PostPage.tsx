@@ -51,7 +51,7 @@ const PostPage = () => {
 						</div>
 					)}
 				</div>
-				<div className='md:w-3/5 w-full h-[80vh] md:px-5'>
+				<div className='md:w-3/5 w-full h-[80vh] md:px-5 md:py-5'>
 					<div className='md:px-3 h-full '>
 						<h3 className='text-2xl font-semibold md:pb-0 pb-4'>
 							Comments
