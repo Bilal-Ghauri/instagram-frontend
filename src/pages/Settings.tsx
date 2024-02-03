@@ -317,6 +317,7 @@ const Settings = () => {
 							)}{' '}
 							Update
 						</button>
+						<div className='py-5'></div>
 					</div>
 				</div>
 				<div className='flex-grow-[1]  items-start  hidden md:flex'>
